@@ -1,0 +1,49 @@
+{
+  "menu": {
+    "title": "Mi Portafolio",
+    "home": "INICIO",
+    "about": "SOBRE MÍ",
+    "skills": "HABILIDADES",
+    "projects": "PROYECTOS",
+    "blog": "BLOG",
+    "contact": "CONTACTO",
+    "language": "IDIOMA",
+    "navigation": "Navegación",
+    "conect": "Conéctate",
+    "contactme": "Contáctame",
+    "phone": "Teléfono",
+    "derechos": "Todos los derechos reservados."
+  },
+  "hero": {
+    "title": "INGENIERO ELECTRÓNICO & DESARROLLADOR FULL STACK",
+    "subt1": "Creando soluciones tecnológicas",
+    "subt2": "que integran hardware y software",
+    "text": "Especializado en el desarrollo de aplicaciones web modernas y sistemas embebidos. Ofrezco soluciones completas que combinan innovación tecnológica con interfaces funcionales y elegantes.",
+    "buton": "Ver Proyectos"
+  },
+  "about": {
+    "title": "Sobre mí",
+    "text1": "Soy un Ingeniero Electrónico apasionado por la tecnología y el desarrollo de software. Con experiencia en el diseño y desarrollo de soluciones tecnológicas innovadoras, combino mis conocimientos en electrónica con mis habilidades en desarrollo full stack para crear aplicaciones robustas y eficientes.",
+    "see_more": "Ver más"
+  },
+  "skills": {
+    "title0": "Habilidades",
+    "title1": "Ingeniería Electrónica",
+    "title2": "Desarrollador de Pila Completa"
+  },
+  "projects": {
+    "title": "Proyectos",
+    "butt": "Ver todos los Proyectos"
+  },
+  "contact": {
+    "title": "Contacto",
+    "text": "¿Tienes un proyecto en mente? ¡Hablemos!",
+    "namein": "Nombre",
+    "nameplace": "Tu nombre",
+    "emailin": "E-mail",
+    "emailplace": "Tu email",
+    "messa": "Mensaje",
+    "messaplace": "Tu Mensaje",
+    "send": "Enviar"
+  }
+}
