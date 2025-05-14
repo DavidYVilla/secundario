@@ -82,7 +82,7 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
-              <Link href="/blog" className="hover:underline">
+              <Link href="/pages/blog" className="hover:underline">
                 {t('menu.blog')}
               </Link>
             </li>

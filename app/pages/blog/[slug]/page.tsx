@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import api from "@/app/utils/api";
 
 interface Post {
   _id: string;
