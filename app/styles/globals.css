@@ -1,0 +1,21 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Transición suave de colores */
+body {
+  transition: background-color 0.3s ease-in-out;
+}
+
+/* Modo claro */
+.light {
+  background-color: white;
+  color: black;
+}
+
+/* Modo oscuro */
+.dark {
+  background-color: black;
+  color: white;
+}
