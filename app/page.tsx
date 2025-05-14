@@ -1,33 +1,34 @@
+'use client';
+
 import Head from 'next/head';
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from './contexts/LanguageContext';
+import { useEffect, useState } from 'react'; // ✅ Importa useEffect
+import LanguageSwitcher from './components/LanguageSwitcher';
+import { metadata } from './metadata';
+import { useContext } from 'react';
+import { ThemeProvider } from './contexts/ThemeContext';
+
+import { motion } from 'framer-motion';
+
+import Hero from './components/Hero';
+import About from './components/About';
+import Skills from './components/Skills';
+import Projects from './components/Projects';
+import Contact from './components/Contact';
 
 export default function Home() {
-  return (
-    <>
-      <Head>
-        <title>David Villa Durán | Portafolio</title>
-        <meta
-          name="description"
-          content="Desarrollador Full Stack especializado en Next.js y Tailwind CSS."
-        />
-        <meta
-          name="keywords"
-          content="Next.js, React, Tailwind CSS, Full Stack, Desarrollo Web"
-        />
-        <meta name="author" content="David Y. Villa Durán" />
-        {/* Open Graph (para redes sociales) */}
-        <meta property="og:title" content="David Villa Durán | Portafolio" />
-        <meta
-          property="og:description"
-          content="Explora mi portafolio con proyectos innovadores en Next.js y Tailwind CSS."
-        />
-        <meta property="og:image" content="/thumbnail.jpg" />
-        <meta property="og:url" content="https://tuportafolio.com" />
-        <meta property="og:type" content="website" />
-      </Head>
+  const { t } = useTranslation();
 
-      <main>
-        <h1>Bienvenido a mi portafolio</h1>
+  return (
+    <div>
+      <main className="w-full text-center bg-primary dark:bg-gray-900 ">
+        <Hero />
+        <About />
+        <Skills />
+        <Projects />
+        <Contact />
       </main>
-    </>
+    </div>
   );
 }
