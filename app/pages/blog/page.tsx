@@ -7,11 +7,12 @@ import Link from 'next/link';
 interface Post {
   _id: string;
   title: string;
+  slug: string;
   content: string;
   image: string;
   likes: number;
   comments: { _id: string; text: string; createdAt: string }[];
-  category?: string[]; // ✅ Se añade "?" para manejar valores opcionales
+  categories?: string[];
 }
 
 const BlogPage = () => {
@@ -21,13 +22,19 @@ const BlogPage = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    setIsAuthenticated(!!localStorage.getItem('token')); // 🔥 Verificar autenticación
+    loadPosts(selectedCategory, 1);
+  }, [selectedCategory]);
 
   const loadPosts = async (category: string | null, currentPage = 1) => {
     try {
       setLoading(true);
       setError(null);
-
       const data = await fetchPosts(category, currentPage);
+
       if (!data || !data.posts || data.posts.length === 0) {
         setError('No hay posts disponibles en esta categoría.');
         setVisiblePosts([]);
@@ -45,9 +52,27 @@ const BlogPage = () => {
     }
   };
 
-  useEffect(() => {
-    loadPosts(selectedCategory, 1);
-  }, [selectedCategory]);
+  const handleLike = async (postId: string) => {
+    if (!isAuthenticated) {
+      alert('Debes iniciar sesión para dar like.');
+      return;
+    }
+    console.log('🔍 ID del post enviado al backend:', postId); // 🔥 Verificar el ID antes de la solicitud
+
+    try {
+      await fetch(`http://localhost:5000/posts/${postId}/like`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+
+      console.log('✅ Like enviado!');
+    } catch (error) {
+      console.error('❌ Error al dar like:', error);
+    }
+  };
 
   return (
     <div className="container mx-auto py-10">
@@ -84,84 +109,60 @@ const BlogPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {visiblePosts.length > 0 ? (
           visiblePosts.map((post) => (
-            <Link key={post._id} href={`/blog/${post._id}`} className="block">
-              <div className="bg-white dark:bg-gray-900 shadow-lg rounded-lg overflow-hidden transform transition hover:scale-105">
+            <div
+              key={post._id}
+              className="block bg-white dark:bg-gray-900 shadow-lg rounded-lg overflow-hidden transform transition hover:scale-105"
+            >
+              <Link href={`/pages/blog/${post.slug}`}>
                 <img
                   src={post.image}
                   alt={post.title}
                   className="w-full h-40 object-cover transition-opacity hover:opacity-80"
                 />
-                <div className="p-4 relative flex flex-col gap-2">
-                  <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
-                    {post.title}
-                  </h2>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm">
-                    {post.content.slice(0, 100)}...
-                  </p>
+              </Link>
 
-                  {/* Categorías con validación de existencia */}
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {post.category && Array.isArray(post.category) ? (
-                      post.category.map((cat) => (
-                        <span
-                          key={cat}
-                          className="px-3 py-1 text-sm font-medium bg-secondary dark:bg-primary text-white rounded-full shadow-sm"
-                        >
-                          {cat}
-                        </span>
-                      ))
-                    ) : (
-                      <span className="text-gray-400 text-sm">
-                        Sin categoría
+              <div className="p-4 relative flex flex-col gap-2">
+                <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
+                  {post.title}
+                </h2>
+                <p className="text-gray-600 dark:text-gray-300 text-sm">
+                  {post.content.slice(0, 100)}...
+                </p>
+
+                {/* Categorías con validación */}
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {post.categories && Array.isArray(post.categories) ? (
+                    post.categories.map((cat) => (
+                      <span
+                        key={cat}
+                        className="px-3 py-1 text-sm font-medium bg-secondary dark:bg-primary text-white rounded-full shadow-sm"
+                      >
+                        {cat}
                       </span>
-                    )}
-                  </div>
+                    ))
+                  ) : (
+                    <span className="text-gray-400 text-sm">Sin categoría</span>
+                  )}
+                </div>
 
-                  {/* Likes y comentarios */}
-                  <div className="flex justify-between items-center mt-4 text-gray-500 dark:text-gray-400 text-sm">
-                    <div className="flex items-center gap-2">
-                      <span>❤️ {post.likes}</span>
-                      <span>💬 {post.comments.length}</span>
-                    </div>
+                {/* Likes y comentarios */}
+                <div className="flex justify-between items-center mt-4 text-gray-500 dark:text-gray-400 text-sm">
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => handleLike(post._id)}
+                      className="text-red-500 hover:text-red-700"
+                    >
+                      ❤️ {post.likes}
+                    </button>
+                    <span>💬 {post.comments.length}</span>
                   </div>
                 </div>
               </div>
-            </Link>
+            </div>
           ))
         ) : (
           <p className="text-center text-gray-500">No hay posts disponibles.</p>
         )}
-      </div>
-
-      {/* Paginación mejorada */}
-      <div className="flex justify-center items-center gap-4 mt-8">
-        <button
-          onClick={() => loadPosts(selectedCategory, page - 1)}
-          disabled={page === 1}
-          className={`p-3 rounded-full flex items-center justify-center transition-all duration-300 ${
-            page === 1
-              ? 'bg-gray-300 dark:bg-gray-700 text-gray-500 cursor-not-allowed'
-              : 'bg-primary dark:bg-secondary text-white hover:scale-105 shadow-md'
-          }`}
-        >
-          ⬅
-        </button>
-
-        <div className="px-4 py-2 text-lg font-semibold bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm">
-          {page} / {totalPages}
-        </div>
-
-        <button
-          onClick={() => loadPosts(selectedCategory, page + 1)}
-          disabled={page === totalPages}
-          className={`p-3 rounded-full flex items-center justify-center transition-all duration-300 ${
-            page === totalPages
-              ? 'bg-gray-300 dark:bg-gray-700 text-gray-500 cursor-not-allowed'
-              : 'bg-primary dark:bg-secondary text-white hover:scale-105 shadow-md'
-          }`}
-        >
-          ➡
-        </button>
       </div>
     </div>
   );

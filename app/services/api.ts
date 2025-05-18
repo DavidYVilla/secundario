@@ -22,5 +22,15 @@ export const fetchPosts = async (category?: string, page = 1, limit = 5) => {
     throw error;
   }
 };
+export const fetchPostBySlug = async (slug: string) => {
+  try {
+    const response = await api.get(`/posts/${slug}`);
+    return response.data;
+    
+  } catch (error) {
+    console.error("Error obteniendo post:", error);
+    throw error;
+  }
+};
 
 export default api;
