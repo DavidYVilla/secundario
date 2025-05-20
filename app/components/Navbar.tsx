@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { FaFacebook, FaTwitter, FaLinkedin } from 'react-icons/fa';
+import { FaFacebook, FaTwitter, FaLinkedin, FaGithub } from 'react-icons/fa';
 import { HiX, HiMenu } from 'react-icons/hi';
 import { useTranslation } from 'react-i18next';
 import Flag from 'react-world-flags';
@@ -122,7 +122,7 @@ export default function Navbar() {
             </div>
 
             <a
-              href="https://facebook.com"
+              href="https://www.facebook.com/profile.php?id=61576240820775"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -132,7 +132,7 @@ export default function Navbar() {
               />
             </a>
             <a
-              href="https://twitter.com"
+              href="https://twitter.com/davidvilladuran"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -142,7 +142,7 @@ export default function Navbar() {
               />
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/david-villa-9a40ba2ab"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -150,6 +150,13 @@ export default function Navbar() {
                 className="text-white hover:text-secondary"
                 size={24}
               />
+            </a>
+            <a
+              href="https://github.com/DavidYVilla/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaGithub className="text-white hover:text-secondary" size={24} />
             </a>
           </div>
         </div>

@@ -1,28 +1,31 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
   const [isRegistering, setIsRegistering] = useState(false);
-  const [username, setUsername] = useState(
-    localStorage.getItem('username') || ''
-  );
-  const [role, setRole] = useState(localStorage.getItem('role') || 'guest');
+  const [username, setUsername] = useState('');
+  const [role, setRole] = useState('guest');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    !!localStorage.getItem('token')
-  );
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
 
-  // 🔥 Manejo de autenticación con OAuth (Google y Facebook)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setUsername(localStorage.getItem('username') || '');
+      setRole(localStorage.getItem('role') || 'guest');
+      setIsAuthenticated(!!localStorage.getItem('token'));
+    }
+  }, []);
+
   useEffect(() => {
     const handleOAuthMessage = (event) => {
-      if (event.origin !== API_URL) return;
-      if (!event.data.token) {
+      if (event.origin !== API_URL || !event.data.token) {
         console.error(
           '❌ Token inválido o datos de autenticación incompletos.'
         );
@@ -33,18 +36,15 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
         const decoded = JSON.parse(atob(event.data.token.split('.')[1]));
         console.log('🔎 Token decodificado:', decoded);
 
-        const extractedUsername = decoded.username || 'Usuario desconocido';
-        const extractedRole = decoded.role || 'guest';
-
         localStorage.setItem('token', event.data.token);
-        localStorage.setItem('username', extractedUsername);
-        localStorage.setItem('role', extractedRole);
-
-        console.log(
-          `✅ Usuario autenticado: ${extractedUsername} | Rol: ${extractedRole}`
+        localStorage.setItem(
+          'username',
+          decoded.username || 'Usuario desconocido'
         );
-        setUsername(extractedUsername);
-        setRole(extractedRole);
+        localStorage.setItem('role', decoded.role || 'guest');
+
+        setUsername(decoded.username);
+        setRole(decoded.role);
         setIsAuthenticated(true);
         onAuthSuccess?.();
         onClose();
@@ -57,7 +57,6 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
     return () => window.removeEventListener('message', handleOAuthMessage);
   }, [onAuthSuccess, onClose]);
 
-  // 🔥 Manejo de autenticación manual (correo y contraseña)
   const handleLogin = async () => {
     try {
       const response = await fetch(`${API_URL}/users/login`, {
@@ -68,12 +67,8 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
 
       const data = await response.json();
       if (response.ok) {
-        console.log('✅ Datos recibidos en login:', data);
-
         localStorage.setItem('token', data.token);
-
         const decodedToken = JSON.parse(atob(data.token.split('.')[1]));
-        console.log('🔎 Token decodificado:', decodedToken);
 
         localStorage.setItem('username', decodedToken.username);
         localStorage.setItem('role', decodedToken.role);
@@ -92,7 +87,6 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
     }
   };
 
-  // 🔥 Manejo de registro de usuario
   const handleRegister = async () => {
     try {
       const response = await fetch(`${API_URL}/users/register`, {
@@ -103,8 +97,7 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
 
       const data = await response.json();
       if (response.ok) {
-        console.log('✅ Registro exitoso:', data);
-        setIsRegistering(false); // Cambiar a login después del registro
+        setIsRegistering(false);
       } else {
         setErrorMessage(data.message || 'Error en el registro.');
       }
@@ -133,7 +126,6 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
             </p>
           )}
 
-          {/* 🔥 Formulario de autenticación / registro */}
           <div className="mt-4 space-y-3">
             {isRegistering && (
               <input
@@ -160,13 +152,12 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
             />
             <button
               onClick={isRegistering ? handleRegister : handleLogin}
-              className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg w-full hover:bg-blue-600"
+              className="relative mt-6 w-full h-12 flex items-center justify-center bg-blue-500 text-white rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 hover:bg-blue-600"
             >
               {isRegistering ? '🆕 Registrarse' : '🔒 Iniciar sesión'}
             </button>
           </div>
 
-          {/* 🔥 Botones de OAuth */}
           <button
             onClick={() =>
               window.open(
@@ -175,10 +166,21 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
                 'width=500,height=600'
               )
             }
-            className="mt-6 px-4 py-2 bg-red-500 text-white rounded-lg w-full hover:bg-red-600"
+            className="relative mt-6 w-full h-12 flex items-center justify-center bg-gradient-to-r from-white-500 via-red-600 to-green-700 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
           >
-            🔵 Iniciar sesión con Google
+            {/* Imagen del logo de Google */}
+            <Image
+              src="/google-icon.svg" // 🔥 Asegúrate de tener esta imagen en tu carpeta `public`
+              alt="Google Login"
+              width={32}
+              height={32}
+              className="absolute left-4"
+            />
+            <span className="text-white text-lg tracking-wide font-semibold glow-effect">
+              Acceder con Google!.
+            </span>
           </button>
+
           <button
             onClick={() =>
               window.open(
@@ -187,9 +189,18 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
                 'width=500,height=600'
               )
             }
-            className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg w-full hover:bg-blue-700"
+            className="relative mt-6 w-full h-12 flex items-center justify-center bg-gradient-to-r from-blue-500 via-yellow-600 to-green -700 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
           >
-            🔵 Iniciar sesión con Facebook
+            <Image
+              src="/facebook-icon.svg" // 🔥 Asegúrate de tener esta imagen en tu carpeta `public`
+              alt="Facebook Login"
+              width={32}
+              height={32}
+              className="absolute left-4"
+            />
+            <span className="text-white text-lg tracking-wide font-semibold glow-effect">
+              Acceder con Facebook!.
+            </span>
           </button>
 
           <div className="mt-6 text-center">
@@ -205,7 +216,7 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
 
           <button
             onClick={onClose}
-            className="mt-4 px-4 py-2 bg-gray-500 text-white rounded-lg w-full hover:bg-gray-600"
+            className="relative mt-6 w-full h-12 flex items-center justify-center bg-red-500 text-white rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 hover:bg-gray-600"
           >
             ❌ Cancelar
           </button>

@@ -19,8 +19,8 @@ export default function Projects() {
         {/* Proyecto 1 */}
         <div className="group border rounded-lg shadow-lg overflow-hidden">
           <Image
-            src="/imagenes/proyecto1.png"
-            alt="Proyecto 1"
+            src="/imagenes/liquor/portada1.png"
+            alt="The Majestic Liquor"
             width={224} // Equivale a Tailwind `w-56`
             height={224}
             priority
@@ -28,12 +28,15 @@ export default function Projects() {
           />
           <div className="p-4">
             <h3 className="text-xl font-bold text-secondary mb-2">
-              Proyecto 1
+              The Majestic Liquor
             </h3>
             <p className="text-gray-600">
-              Un vistazo a mi primer proyecto interactivo.
+              Sistema de control de compra y venta para una licoreria.!
             </p>
-            <a href="#" className="text-yellow-500 hover:underline mt-2 block">
+            <a
+              href="/pages/projects"
+              className="text-yellow-500 hover:underline mt-2 block"
+            >
               Ver más
             </a>
           </div>
@@ -41,8 +44,8 @@ export default function Projects() {
         {/* Proyecto 2 */}
         <div className="group border rounded-lg shadow-lg overflow-hidden">
           <Image
-            src="/imagenes/proyecto1.png"
-            alt="Proyecto 1"
+            src="/imagenes/portafolio/presentacion1.png"
+            alt="Portafolio Profesional"
             width={224} // Equivale a Tailwind `w-56`
             height={224}
             priority
@@ -50,10 +53,11 @@ export default function Projects() {
           />
           <div className="p-4">
             <h3 className="text-xl font-bold text-secondary mb-2">
-              Proyecto 2
+              Portafolio Profesional
             </h3>
             <p className="text-gray-600">
-              Mi trabajo en diseño con animaciones y performance.
+              Desarrollo de mi propio portafolio Profesional. donde podrás
+              contactarte con su servidor.!
             </p>
             <a href="#" className="text-yellow-500 hover:underline mt-2 block">
               Ver más
@@ -63,8 +67,8 @@ export default function Projects() {
         {/* Proyecto 3 */}
         <div className="group border rounded-lg shadow-lg overflow-hidden">
           <Image
-            src="/imagenes/proyecto1.png"
-            alt="Proyecto 1"
+            src="/imagenes/blog/pantalla1.png"
+            alt="Blog Personal"
             width={224} // Equivale a Tailwind `w-56`
             height={224}
             priority
@@ -72,10 +76,11 @@ export default function Projects() {
           />
           <div className="p-4">
             <h3 className="text-xl font-bold text-secondary mb-2">
-              Proyecto 3
+              Blog Personal
             </h3>
             <p className="text-gray-600">
-              Un proyecto centrado en la experiencia del usuario.
+              Donde podrás leer los aportes, opiniones y pensamientos en
+              distintas áreas del conocimiento y desarrollo personal.
             </p>
             <a href="#" className="text-yellow-500 hover:underline mt-2 block">
               Ver más

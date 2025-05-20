@@ -48,7 +48,7 @@ export default function Footer() {
             <ul className="flex space-x-6">
               <li>
                 <a
-                  href="https://facebook.com"
+                  href="https://www.facebook.com/profile.php?id=61576240820775"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-secondary"
@@ -58,7 +58,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="https://twitter.com"
+                  href="https://twitter.com/davidvilladuran"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-secondary"
@@ -68,7 +68,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="https://linkedin.com"
+                  href="https://www.linkedin.com/in/david-villa-9a40ba2ab"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-secondary"
@@ -78,7 +78,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="https://github.com"
+                  href="https://github.com/DavidYVilla/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-secondary"
@@ -95,16 +95,16 @@ export default function Footer() {
             <p className="text-neutral">
               Email:{' '}
               <a
-                href="mailto:contacto@ejemplo.com"
+                href="mailto:dvilladuran@gmail.com"
                 className="hover:text-secondary"
               >
-                contacto@ejemplo.com
+                dvilladuran@gmail.com
               </a>
             </p>
             <p className="text-neutral">
               {t('menu.phone')}:{' '}
-              <a href="tel:+1234567890" className="hover:text-secondary">
-                +123 456 7890
+              <a href="tel:+59173686405" className="hover:text-secondary">
+                +591 736 86405
               </a>
             </p>
           </div>

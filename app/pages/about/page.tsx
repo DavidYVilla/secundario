@@ -49,11 +49,14 @@ export default function About() {
           Mi Trayectoria
         </h2>
         <p className="mb-4">
-          Desde temprana edad, descubrí mi pasión por la tecnología y la
-          innovación. Mi formación como Ingeniero Electrónico me ha permitido
-          desarrollar una sólida base en diseño de circuitos, sistemas embebidos
-          y control automatizado, combinando hardware y software para crear
-          soluciones tecnológicas impactantes.
+          Desde una edad temprana, inspirado por el enfoque visionario de mi
+          padre, desarrollé una profunda afinidad por la tecnología y la
+          innovación. Como Ingeniero Electrónico, he consolidado una base
+          robusta en el diseño y análisis de circuitos, sistemas embebidos y
+          automatización avanzada. Mi trabajo se centra en la integración
+          eficiente de hardware y software, optimizando arquitecturas
+          electrónicas para desarrollar soluciones tecnológicas de alto
+          rendimiento que impulsan la innovación en la industria.
         </p>
         <p className="mb-4">
           Durante mi trayectoria profesional, he trabajado en la implementación
@@ -207,7 +210,7 @@ export default function About() {
         </p>
         <div className="flex justify-center space-x-6">
           <a
-            href="https://facebook.com/DavidVilla"
+            href="https://www.facebook.com/profile.php?id=61576240820775"
             target="_blank"
             rel="noopener noreferrer"
             className="text-primary hover:text-secondary transition"
@@ -215,7 +218,7 @@ export default function About() {
             <FaFacebook size={32} />
           </a>
           <a
-            href="https://twitter.com/tuusuario"
+            href="https://twitter.com/davidvilladuran"
             target="_blank"
             rel="noopener noreferrer"
             className="text-primary hover:text-secondary transition"
@@ -223,7 +226,7 @@ export default function About() {
             <FaTwitter size={32} />
           </a>
           <a
-            href="https://linkedin.com/in/tuusuario"
+            href="https://www.linkedin.com/in/david-villa-9a40ba2ab"
             target="_blank"
             rel="noopener noreferrer"
             className="text-primary hover:text-secondary transition"
@@ -231,7 +234,7 @@ export default function About() {
             <FaLinkedin size={32} />
           </a>
           <a
-            href="https://github.com/tuusuario"
+            href="https://github.com/DavidYVilla/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-primary hover:text-secondary transition"
